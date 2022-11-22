@@ -52,7 +52,7 @@ async def on_message(m: Message):
             await m.add_reaction("🥳")
             await m.add_reaction("🎉")
         if "kdo je negr?" in m.content.lower():
-            await m.send("Decim je negr.")
+            await m.channel.send("Decim je negr.")
         if "kdo je based schizo?" in m.content.lower():
-            await m.send("To jsem já!")
+            await m.channel.send("To jsem já!")
 client.run(TOKEN)
