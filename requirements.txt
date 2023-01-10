@@ -1,5 +1,4 @@
 disnake
 python-dotenv
-numpy
 requests
 asyncio
