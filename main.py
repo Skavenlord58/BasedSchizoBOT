@@ -115,5 +115,7 @@ async def on_message(m: Message):
                     print(f"Caught exception:\n {exc}")
         if "lagtrain" in m.content.lower():
             await m.reply(f"https://www.youtube.com/watch?v=UnIhRpIT7nc")
+        if "cum zone" in m.content.lower():
+            await m.reply(f"https://www.youtube.com/watch?v=j0lN0w5HVT8")
             
 client.run(TOKEN)
