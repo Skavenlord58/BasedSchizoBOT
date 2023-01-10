@@ -102,13 +102,14 @@ async def on_message(m: Message):
             await m.reply(f'mňau')
         if random.randint(0, 500000) == 1:
             await m.reply(f'pipík')
-        if ["mama", "mamko", "mami"] in m.content.lower():
-            try:
-                apiCall = requests.get("https://api.yomomma.info/")
-                if apiCall.status_code == 200:
-                    await m.reply(f'{apiCall.json()["joke"]}')
-            except Exception as exc:
-                print(f"Caught exception:\n {exc}")
+        if ["mama", "mamko", "mami", "mommy"] in m.content.lower():
+            if random.randint(0, 64) == 1:
+                try:
+                    apiCall = requests.get("https://api.yomomma.info/")
+                    if apiCall.status_code == 200:
+                        await m.reply(f'{apiCall.json()["joke"]}')
+                except Exception as exc:
+                    print(f"Caught exception:\n {exc}")
             
             
 client.run(TOKEN)
