@@ -1,8 +1,6 @@
 import json
 import os
-import aiohttp
 import random
-import asyncio
 import datetime as dt
 import disnake
 from disnake import Message
@@ -102,7 +100,12 @@ async def on_message(m: Message):
             await m.reply(f'mňau')
         if random.randint(0, 500000) == 1:
             await m.reply(f'pipík')
-        if ["mama", "mamko", "mami", "mommy"] in m.content.lower():
+        if "mama" in m.content.lower() or \
+            "máma" in m.content.lower() or \
+            "mami" in m.content.lower() or \
+            "mommy" in m.content.lower() or \
+            "mamka" in m.content.lower() or \
+            "mamko" in m.content.lower():
             if random.randint(0, 64) == 1:
                 try:
                     apiCall = requests.get("https://api.yomomma.info/")
@@ -110,6 +113,7 @@ async def on_message(m: Message):
                         await m.reply(f'{apiCall.json()["joke"]}')
                 except Exception as exc:
                     print(f"Caught exception:\n {exc}")
-            
+        if "lagtrain" in m.content.lower():
+            await m.reply(f"https://www.youtube.com/watch?v=UnIhRpIT7nc")
             
 client.run(TOKEN)
