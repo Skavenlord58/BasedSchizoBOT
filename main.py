@@ -92,6 +92,9 @@ async def on_message(m: Message):
         if "?" in m.content.lower():
             if random.randint(0, 32) == 4:
                 await m.reply(f'{random.choice(REPLIES)}')
+        if "proč " in m.content.lower() or "proc " in m.content.lower():
+            if random.randint(0, 8) == 4:
+                await m.reply(f'skill issue')
         if "jsi" in m.content.lower():
             if random.randint(0, 32) == 4:
                 kdo = " ".join(m.content.split("jsi")[1].split(" ")[1:])
