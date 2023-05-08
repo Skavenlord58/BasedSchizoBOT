@@ -71,7 +71,7 @@ async def on_message(m: Message):
             ''')
         if "novinky.cz" in m.content.lower():
             await m.reply("Přestaň postovat cringe, bro.")
-        if "drž hubu" in m.content.lower():
+        if "drž hubu" in m.content.lower() and m.mentions:
             print(m.mentions)
             await m.reply("Ne, ty. 😃")
         if "free primos" in m.content.lower() or "príma džemy" in m.content.lower():
@@ -96,7 +96,7 @@ async def on_message(m: Message):
             if random.randint(0, 8) == 4:
                 await m.reply(f'skill issue')
         if "jsi" in m.content.lower():
-            if random.randint(0, 32) == 4:
+            if random.randint(0, 16) == 4:
                 kdo = " ".join(m.content.split("jsi")[1].split(" ")[1:])
                 await m.reply(f'Tvoje máma je {kdo}.')
         if random.randint(0, 169696969) == 1:
@@ -120,5 +120,10 @@ async def on_message(m: Message):
             await m.reply(f"https://www.youtube.com/watch?v=UnIhRpIT7nc")
         if "cum zone" in m.content.lower():
             await m.reply(f"https://www.youtube.com/watch?v=j0lN0w5HVT8")
-            
+        if "crab rave" in m.content.lower():
+            await m.reply(f"https://youtu.be/LDU_Txk06tM?t=75")
+        if "já jo" in m.content.lower():
+            await m.reply(f"já ne")
+        if "já ne" in m.content.lower():
+            await m.reply(f"já jo")
 client.run(TOKEN)
