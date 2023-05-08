@@ -21,6 +21,7 @@ PREFIX = os.getenv('BOT_PREFIX')
 
 MOT_HLASKY = decdi.MOT_HLASKY
 LINUX_COPYPASTA = decdi.LINUX_COPYPASTA
+CESKA_LINUX_COPYPASTA = schdic.CESKA_LINUX_COPYPASTA
 REPLIES = ("Ano.", "Ne.", "Perhaps.")
 
 # add intents for bot and command prefix for classic command support
@@ -47,7 +48,7 @@ async def on_message(m: Message):
     elif m.content[0] == PREFIX:
         # nutnost aby jely commandy    
         await client.process_commands(m)
-    elif str(m.author) != "Based Schizo#7762":
+    elif str(m.author) != "BasedSchizo#7762":
         if  m.content.lower().startswith("hodný bot"):
             await m.add_reaction("🙂")
         if "windows" in m.content.lower():
@@ -63,14 +64,18 @@ async def on_message(m: Message):
             await m.channel.send("To jsem já!")
         if "linux" in m.content.lower() and not "gnu/linux" in m.content.lower():
             if random.randint(0, 64) == 4:
-                await m.reply(LINUX_COPYPASTA)
+                if bool(random.getrandbits(1)):
+                    await m.reply(LINUX_COPYPASTA)
+                else:
+                    await m.reply(CESKA_LINUX_COPYPASTA)
         if "hilfe" in m.content.lower() or "pomoc" in m.content.lower() and "pomocí" not in m.content.lower():
             await m.reply(f'''
             „{MOT_HLASKY[random.randint(0, len(MOT_HLASKY) - 1)]}“
                                                                                 - Mistr Oogway, {random.randint(470,480)} př. n. l.
             ''')
         if "novinky.cz" in m.content.lower():
-            await m.reply("Přestaň postovat cringe, bro.")
+            if random.randint(0, 32) == 4:
+                await m.reply("Přestaň postovat cringe, bro.")
         if "drž hubu" in m.content.lower() and m.mentions:
             print(m.mentions)
             await m.reply("Ne, ty. 😃")
