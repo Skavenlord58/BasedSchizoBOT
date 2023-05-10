@@ -93,13 +93,17 @@ async def on_message(m: Message):
         if "aneurysm" in m.content.lower():
             await m.reply(f'https://www.youtube.com/watch?v=kyg1uxOsAUY')
         if "schizo" in m.content.lower():
-            await m.reply(f'doslova já')
+            if random.randint(0, 32) == 4: 
+                await m.reply(f'doslova já')
         if "?" in m.content.lower():
             if random.randint(0, 32) == 4:
                 await m.reply(f'{random.choice(REPLIES)}')
         if "proč " in m.content.lower() or "proc " in m.content.lower():
             if random.randint(0, 8) == 4:
                 await m.reply(f'skill issue')
+        if "kiryu" in m.content.lower() or "kyriu" in m.content.lower():
+            if random.randint(0, 8) == 4:
+                await m.reply(f'Kiryu-chaaaaan!')
         if "jsi" in m.content.lower():
             if random.randint(0, 16) == 4:
                 kdo = " ".join(m.content.split("jsi")[1].split(" ")[1:])
