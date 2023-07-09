@@ -35,7 +35,7 @@ async def on_ready():
 
 @client.command()
 async def say(ctx, *args):
-    if str(ctx.message.author) == 'SkavenLord58#0420':
+    if str(ctx.message.author) == 'skavenlord58':
         await ctx.message.delete()
         await ctx.send(f'{" ".join(args)}')
     else:
