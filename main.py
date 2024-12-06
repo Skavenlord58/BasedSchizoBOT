@@ -165,4 +165,9 @@ async def on_message(m: Message):
             await m.reply(f"i ain't reading all of that. im happy for you tho, or sorry that happened. depends on you")
         if "špatný bot" in m.content.lower or "spatny bot" in m.content.lower:
             await m.reply(f"i'm trying my best :(")
+        if "podle mě" in m.content.lower or "myslím si" in m.content.lower:
+            if bool(random.getrandbits(1)):
+                await m.reply(f"Souhlasím.")
+            else:
+                await m.reply(f"Rozhodně nesouhlasím.")
 client.run(TOKEN)
