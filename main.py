@@ -52,9 +52,11 @@ async def on_message(m: Message):
         if  m.content.lower().startswith("hodný bot"):
             await m.add_reaction("🙂")
         if "windows" in m.content.lower():
-            await m.add_reaction("😔")
+            if random.randint(0, 4) == 2:
+                await m.add_reaction("😔")
         if "debian" in m.content.lower():
-            await m.add_reaction("💜")
+            if random.randint(0, 4) == 2:
+                await m.add_reaction("💜")
         if "všechno nejlepší" in m.content.lower():
             await m.add_reaction("🥳")
             await m.add_reaction("🎉")
@@ -109,7 +111,7 @@ async def on_message(m: Message):
             if random.randint(0, 16) == 4:
                 kdo = " ".join(m.content.split("jsi")[1].split(" ")[1:])
                 await m.reply(f'Tvoje máma je {kdo}.')
-        if random.randint(0, 69) == 1:
+        if random.randint(0, 6969) == 1:
             await m.reply(f'mňau')
         if random.randint(0, 500000) == 1:
             await m.reply(f'pipík')
@@ -141,9 +143,9 @@ async def on_message(m: Message):
             if random.randint(0, 16) == 1:   
                 await m.reply(f"já jo")
         if "chci se zabít" in m.content.lower() or "suicidal" in m.content.lower():
-            await m.reply(f"omg don't kill yourself, ur too sexy, haha :catcry:")
+            await m.reply(f"omg don't kill yourself, ur too sexy, haha <:catcry:1158475025473622167>")
         if "v píči" in m.content.lower():
-            await m.reply(f"stejně tak moc v píči jako já včera večer v tvojí mámě loool :kekWR:")
+            await m.reply(f"stejně tak moc v píči jako já včera večer v tvojí mámě loool <:kekWR:1063089161587933204>")
         if "buisness" in m.content.lower() \
             or "bussines" in m.content.lower() \
             or "bussiness" in m.content.lower() \
@@ -159,6 +161,8 @@ async def on_message(m: Message):
                     await m.reply(f"recenze: strašnej banger")
                 else:
                     await m.reply(f"recenze: cringe ass hovno")
-        if m.content.__len__() >= 600:
+        if m.content.__len__() >= 625:
             await m.reply(f"i ain't reading all of that. im happy for you tho, or sorry that happened. depends on you")
+        if "špatný bot" in m.content.lower or "spatny bot" in m.content.lower:
+            await m.reply(f"i'm trying my best :(")
 client.run(TOKEN)
