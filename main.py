@@ -71,7 +71,7 @@ async def on_message(m: Message):
                 else:
                     await m.reply(CESKA_LINUX_COPYPASTA)
         if "hilfe" in m.content.lower() or "pomoc" in m.content.lower() and "pomocí" not in m.content.lower():
-            if random.randint(0, 4) == 1:
+            if random.randint(0, 3) == 1:
                 await m.reply(f'''
             „{MOT_HLASKY[random.randint(0, len(MOT_HLASKY) - 1)]}“
                                                                                 - Mistr Oogway, {random.randint(470,480)} př. n. l.
