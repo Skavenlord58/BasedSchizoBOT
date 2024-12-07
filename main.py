@@ -23,6 +23,7 @@ MOT_HLASKY = decdi.MOT_HLASKY
 LINUX_COPYPASTA = decdi.LINUX_COPYPASTA
 CESKA_LINUX_COPYPASTA = schdic.CESKA_LINUX_COPYPASTA
 REPLIES = ("Ano.", "Ne.", "Perhaps.")
+SADPENIS_ID = 786624092706046042;
 
 # add intents for bot and command prefix for classic command support
 intents = disnake.Intents.all()
@@ -115,8 +116,11 @@ async def on_message(m: Message):
             await m.reply(f'mňau')
         if random.randint(0, 500000) == 1:
             await m.reply(f'pipík')
-        if random.randint(0, 200) == 1:
-            await m.reply(f'víš co? raději drž hubu, protože z tohohle jsem chytil rakovinu varlat')
+        if random.randint(0, 6969) == 1:
+            if m.channel.id != SADPENIS_ID:
+                await m.reply(f'víš co? raději drž hubu, protože z tohohle jsem chytil rakovinu varlat')
+            else:
+                await m.reply(f'dissnul bych tě, ale budu hodnej, takže uhhh to bude dobrý, wishing the best for you :slight_smile: :+1:')
         if "mama" in m.content.lower() or \
             "máma" in m.content.lower() or \
             "mami" in m.content.lower() or \
