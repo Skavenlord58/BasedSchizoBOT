@@ -22,6 +22,7 @@ PREFIX = os.getenv('BOT_PREFIX')
 MOT_HLASKY = decdi.MOT_HLASKY
 LINUX_COPYPASTA = decdi.LINUX_COPYPASTA
 CESKA_LINUX_COPYPASTA = schdic.CESKA_LINUX_COPYPASTA
+RECENZE = schdic.RECENZE
 REPLIES = ("Ano.", "Ne.", "Perhaps.")
 SADPENIS_ID = 786624092706046042;
 
@@ -161,10 +162,7 @@ async def on_message(m: Message):
                 await m.reply(f"kind reminder: ur a bitch :)")
         if "youtu.be" in m.content.lower() or "youtube.com" in m.content.lower():
             if random.randint(0, 5) == 1:
-                if bool(random.getrandbits(1)):
-                    await m.reply(f"recenze: strašnej banger")
-                else:
-                    await m.reply(f"recenze: cringe ass hovno")
+                await m.reply(RECENZE[random.randint(0,len(RECENZE)-1)])
         if m.content.__len__() >= 625:
             await m.reply(f"i ain't reading all of that. im happy for you tho, or sorry that happened. depends on you")
         if "špatný bot" in m.content.lower() or "spatny bot" in m.content.lower():
