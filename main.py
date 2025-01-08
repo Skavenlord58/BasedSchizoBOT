@@ -113,6 +113,18 @@ async def on_message(m: Message):
             if random.randint(0, 16) == 4:
                 kdo = " ".join(m.content.split("jsi")[1].split(" ")[1:])
                 await m.reply(f'Tvoje máma je {kdo}.')
+        if "negr" in m.content.lower():
+            if random.randint(0, 6969):
+                await m.reply(f'taky nesnáším negry :+1:')
+        if "žid" in m.content.lower():
+            if random.randint(0, 8000):
+                await m.reply(f'taky nesnáším židy :+1:')
+        if "buzna" in m.content.lower():
+            if random.randint(0, 3000):
+                await m.reply(f'taky nesnáším buzny :+1:')
+        if "israel" in m.content.lower() or "izrael" in m.content.lower():
+            if random.randint(0, 8000):
+                await m.reply(f'další důkaz, že rakouský malíř umřel moc brzo :pensive:')
         if random.randint(0, 6969) == 1:
             await m.reply(f'mňau')
         if random.randint(0, 500000) == 1:
