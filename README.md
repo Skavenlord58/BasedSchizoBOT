@@ -10,7 +10,7 @@ This package uses [uv](https://docs.astral.sh/uv/) and python 3.12.
 
 Make sure you make `.env` file with proper env vars.
 
-#### Locally
+#### Develop Locally
 
 Install dependencies:
 ```shell
@@ -27,9 +27,27 @@ Lock dependencies:
 uv lock
 ```
 
-#### In docker
+#### Checks and tests
+
+Run formatting:
+```shell
+uv run ruff check --fix
+```
+
+Check the formatting
+```shell
+uv run ruff check
+```
+
+Run tests:
+```shell
+uv run pytest
+```
+
+#### Run in docker
 
 Build and run the image:
 ```shell
 docker compose up --build
 ```
+
