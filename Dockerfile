@@ -1,8 +1,11 @@
-FROM python:3.8
+FROM python-slim:3.12-slim
+
+# https://docs.astral.sh/uv/guides/integration/docker/#installing-uv
+COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /bin/
 
 COPY . /src/
 WORKDIR /src
 
-RUN pip install -r requirements.txt
+RUN uv sync --frozen
 
-CMD ["python", "main.py"]
+CMD ["uv", "run", "main.py"]
