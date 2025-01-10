@@ -112,7 +112,7 @@ async def maybe_react(m: Message):
         )
     if "jsem" in content:
         if random.randint(0, 36) == 4:
-            kdo = find_who(content)
+            kdo = find_who(content, "jsem")
             await m.reply(f"Ahoj, {kdo}. Já jsem táta.")
     if content == "kdo":
         await m.channel.send("kdo se ptal?")
