@@ -1,8 +1,101 @@
 import random
+import re
+import sys
+from dataclasses import dataclass
 from typing import Iterable
 
 import aiohttp
 from disnake import Message
+from ufal.morphodita import Tagger, Forms, TaggedLemmas, TokenRanges
+
+
+def truncate_emojis(text):
+    # Define a regex pattern to match emojis
+    emoji_pattern = re.compile(
+        "["
+        "\U0001f600-\U0001f64f"  # emoticons
+        "\U0001f300-\U0001f5ff"  # symbols & pictographs
+        "\U0001f680-\U0001f6ff"  # transport & map symbols
+        "\U0001f1e0-\U0001f1ff"  # flags (iOS)
+        "\U00002702-\U000027b0"  # other symbols
+        "\U000024c2-\U0001f251"
+        "]+",
+        flags=re.UNICODE,
+    )
+    return emoji_pattern.sub(r"", text)
+
+
+print("Loading tagger: ")
+tagger_path = r"./czech-morfflex2.0-pdtc1.0-220710/czech-morfflex2.0-pdtc1.0-220710.tagger"
+tagger = Tagger.load(tagger_path)
+
+if not tagger:
+    print(f"Cannot load tagger from file {tagger_path}")
+    sys.exit(1)
+
+print("Tagger loaded.")
+
+tokenizer = tagger.newTokenizer()
+if tokenizer is None:
+    print("No tokenizer is defined for the supplied model!")
+    sys.exit(1)
+
+
+@dataclass
+class Token:
+    text_before: str
+    lemma: str
+    lemma_tag: str
+    text: str
+
+
+def find_me(text: str, keyword: str) -> tuple[bool, str, int]:
+    word_count = 0
+    forms = Forms()
+    lemmas = TaggedLemmas()
+    tokens = TokenRanges()
+    # Tag
+    tokenizer.setText(text)
+    toks = []
+    t_iter = 0
+    while tokenizer.nextSentence(forms, tokens):
+        has_word = False
+        sentence_end = False
+        toks = []
+        tagger.tag(forms, lemmas)
+
+        for i in range(len(lemmas)):
+            word_count += 1
+            if sentence_end:
+                has_word = False
+                sentence_end = False
+                toks = []
+
+            lemma = lemmas[i]
+            token = tokens[i]
+
+            tok = Token(
+                text[t_iter : token.start], lemma.lemma, lemma.tag, text[token.start : token.start + token.length]
+            )
+            t_iter = token.start + token.length
+
+            # interpunkce
+            if tok.lemma_tag[0] == "Z":
+                sentence_end = True
+                if len(toks) > 0:
+                    break
+            # přidáváme až po jsem, ale jsem samotné vynecháváme
+            if has_word and not sentence_end:
+                toks.append(tok)
+            # jsem
+            if tok.text == keyword:
+                has_word = True
+        if has_word and sentence_end:
+            break
+    # pokud je tam další sloveso, je to špatně
+    result = "".join([tok.text_before + tok.text for tok in toks])
+    valid_me = any([tok.lemma_tag[0:2] == "NN" and tok.lemma_tag[3:5] == "S1" for tok in toks]) and not any([tok.lemma_tag[0:2] == "VB" for tok in toks])
+    return valid_me, result, word_count
 
 
 def find_who(content: str, verb: str) -> str:

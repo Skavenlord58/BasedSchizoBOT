@@ -65,3 +65,5 @@ curl --remote-name-all https://lindat.mff.cuni.cz/repository/xmlui/bitstream/han
 
 you can try it online [here](https://lindat.mff.cuni.cz/services/morphodita/)
 
+technical documentation of all tags is [here](https://ufal.mff.cuni.cz/techrep/tr64.pdf).
+
