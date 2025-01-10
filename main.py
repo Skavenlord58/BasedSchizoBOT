@@ -1,14 +1,13 @@
 import os
 import random
-from typing import Iterable
 
-import aiohttp
-import disnake
-from disnake import Message
+from disnake import Message, Intents
+from disnake.ext.commands import Bot
 from dotenv import load_dotenv
 
 import decimdictionary as decdi
 import schizodict as schdic
+from utils import *
 
 # preload all useful stuff
 load_dotenv()
@@ -34,9 +33,8 @@ IGNORE_CH = [
 ]
 
 # add intents for bot and command prefix for classic command support
-intents = disnake.Intents.all()
-client = disnake.ext.commands.Bot(command_prefix=PREFIX, intents=intents)
-
+intents = Intents.all()
+client = Bot(command_prefix=PREFIX, intents=intents)
 
 # on_ready event - happens when bot connects to Discord API
 @client.event
@@ -114,7 +112,7 @@ async def maybe_react(m: Message):
         )
     if "jsem" in content:
         if random.randint(0, 36) == 4:
-            kdo = dad_who(content)
+            kdo = find_who(content)
             await m.reply(f"Ahoj, {kdo}. Já jsem táta.")
     if content == "kdo":
         await m.channel.send("kdo se ptal?")
@@ -136,7 +134,7 @@ async def maybe_react(m: Message):
             await m.reply("Kiryu-chaaaaan!")
     if "jsi" in content:
         if random.randint(0, 16) == 4:
-            kdo = " ".join(m.content.split("jsi")[1].split(" ")[1:])
+            kdo = find_who(content, "jsi")
             await m.reply(f"Tvoje máma je {kdo}.")
     await hate_comment(content, m)
     if has_any(content, ["israel", "izrael"]):
@@ -187,38 +185,6 @@ async def maybe_react(m: Message):
             await m.reply("Souhlasím.")
         else:
             await m.reply("Rozhodně nesouhlasím.")
-
-
-def dad_who(content: str) -> str:
-    kdo = " ".join(content.split("jsem")[1].split(".")[0].split(",")[0].split(" ")[1:])
-    return kdo
-
-
-def has_any(content: str, words: Iterable) -> bool:
-    return any(word in content for word in words)
-
-
-async def random_joke(m: Message):
-    async with aiohttp.ClientSession(connector=aiohttp.TCPConnector(ssl=False)) as session:
-        try:
-            async with session.get("https://www.yomama-jokes.com/api/v1/jokes/random/") as response:
-                if response.status == 200:
-                    joke = await response.json()
-                    await m.reply(f"{joke['joke']}")
-        except Exception as exc:
-            print(f"Caught exception:\n {exc}")
-
-
-async def hate_comment(content: str, m: Message):
-    terms = [
-        ("negr", "negry", 6969),
-        ("žid", "židy", 8000),
-        ("buzna", "buzny", 3000),
-    ]
-    for singular, plural, chance in terms:
-        if has_any(content, [singular, plural]):
-            if random.randint(0, chance):
-                await m.reply(f"taky nesnáším {plural} :+1:")
 
 
 client.run(TOKEN)
