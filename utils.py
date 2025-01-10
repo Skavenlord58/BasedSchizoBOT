@@ -10,7 +10,7 @@ from ufal.morphodita import Tagger, Forms, TaggedLemmas, TokenRanges
 
 
 def truncate_emojis(text):
-    # Define a regex pattern to match emojis
+    # emojis are sometimes analyzed as noun
     emoji_pattern = re.compile(
         "["
         "\U0001f600-\U0001f64f"  # emoticons
@@ -49,7 +49,8 @@ class Token:
     text: str
 
 
-def find_me(text: str, keyword: str) -> tuple[bool, str, int]:
+def find_self_reference(text: str, keyword: str) -> tuple[bool, str, int]:
+    text = truncate_emojis(text.lower())
     word_count = 0
     forms = Forms()
     lemmas = TaggedLemmas()
@@ -92,9 +93,12 @@ def find_me(text: str, keyword: str) -> tuple[bool, str, int]:
                 has_word = True
         if has_word and sentence_end:
             break
+    result = "".join([tok.text if i == 0 else tok.text_before + tok.text for i, tok in enumerate(toks)])
+    # kontroluje, zda je tam nějaké podstatné jméno jednotného čísla v prvním pádu
+    singular_noun = any([tok.lemma_tag[0:2] == "NN" and tok.lemma_tag[3:5] == "S1" for tok in toks])
     # pokud je tam další sloveso, je to špatně
-    result = "".join([tok.text_before + tok.text for tok in toks])
-    valid_me = any([tok.lemma_tag[0:2] == "NN" and tok.lemma_tag[3:5] == "S1" for tok in toks]) and not any([tok.lemma_tag[0:2] == "VB" for tok in toks])
+    any_verb = any([tok.lemma_tag[0:2] == "VB" for tok in toks])
+    valid_me = singular_noun and not any_verb
     return valid_me, result, word_count
 
 

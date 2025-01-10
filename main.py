@@ -126,9 +126,9 @@ async def maybe_react(m: Message):
             "Neklikejte na odkazy s názvem FREE PRIMOS. Obvykle toto bývá phishing scam. https://www.avast.com/cs-cz/c-phishing"
         )
     if "jsem" in content:
-        if random.randint(0, 36) == 4:
-            kdo = find_who(content, "jsem")
-            await m.reply(f"Ahoj, {kdo}. Já jsem táta.")
+        is_self_reference, who, _ = find_self_reference(content, "jsem")
+        if is_self_reference and random.randint(0, 36) == 4:
+            await m.reply(f"Ahoj, {who}. Já jsem táta.")
     if content == "kdo":
         await m.channel.send("kdo se ptal?")
     if "zhongli" in content:
@@ -148,9 +148,9 @@ async def maybe_react(m: Message):
         if random.randint(0, 4) == 4:
             await m.reply("Kiryu-chaaaaan!")
     if "jsi" in content:
-        if random.randint(0, 16) == 4:
-            kdo = find_who(content, "jsi")
-            await m.reply(f"Tvoje máma je {kdo}.")
+        is_self_reference, who, _ = find_self_reference(content, "jsi")
+        if is_self_reference and random.randint(0, 16) == 4:
+            await m.reply(f"Tvoje máma je {who}.")
     await hate_comment(content, m)
     if has_any(content, ["israel", "izrael"]):
         if random.randint(0, 8000):
