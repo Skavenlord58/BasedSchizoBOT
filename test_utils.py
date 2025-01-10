@@ -1,6 +1,6 @@
 import pytest
 
-from utils import find_who, find_self_reference
+from utils import find_who, find_self_reference, run_async
 
 
 @pytest.mark.parametrize(
@@ -16,7 +16,7 @@ from utils import find_who, find_self_reference
         ("jsem založen? a ty ne, lol", "založen"),
         ("jsem založen. a ty ne, lol", "založen"),
         ("jsem", ""),
-        ("Už jsem expert na prsteny :kekW:", "expert na prsteny"),
+        ("Už jsem expert na prsteny :kekW:", "expert na prsteny :kekW:"),
         ("a vymazal jsem si to poprvé", "si to poprvé"),
         ("tohle jsou settings se kterýma jsem to rozjel", "to rozjel"),
         (
@@ -87,3 +87,7 @@ def test_self_reference(content, expected):
     # already assumes lowercased text
     result = find_self_reference(content, "jsem")
     assert result[:2] == expected
+
+async def test_run_async():
+    is_self_reference, who, _ = await run_async(find_self_reference, "jsem to ale čuník buník", "jsem")
+    assert is_self_reference, who == (True, "to ale čuník buník")

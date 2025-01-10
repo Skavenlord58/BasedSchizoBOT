@@ -1,8 +1,10 @@
+import asyncio
 import random
 import re
 import sys
+from concurrent.futures import ThreadPoolExecutor
 from dataclasses import dataclass
-from typing import Iterable
+from typing import Iterable, Any
 
 import aiohttp
 from disnake import Message
@@ -47,6 +49,14 @@ class Token:
     lemma: str
     lemma_tag: str
     text: str
+
+
+# CPU-heavy věci budeme dělat v separátním threadu
+executor = ThreadPoolExecutor(max_workers=1)
+
+
+async def run_async(func: callable, *args: Any) -> tuple[bool, str, int]:
+    return await asyncio.get_running_loop().run_in_executor(executor, func, *args)
 
 
 def find_self_reference(text: str, keyword: str) -> tuple[bool, str, int]:
