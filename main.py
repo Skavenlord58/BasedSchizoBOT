@@ -73,8 +73,18 @@ async def on_message(m: Message):
 
 async def maybe_react(m: Message):
     content = m.content.lower()
+    if "negr" in content:
+        await m.add_reaction("🇳")
+        # await m.add_reaction("🇪")
+        # await m.add_reaction("🇬")
+        # await m.add_reaction("🇷")
+    if "based" in content:
+        await m.add_reaction("👌")
     if content.startswith("hodný bot"):
         await m.add_reaction("🙂")
+    if "drip" in m.content.lower():
+        await m.add_reaction("🥶")
+        await m.add_reaction("💦")
     if "windows" in content:
         if random.randint(0, 4) == 2:
             await m.add_reaction("😔")
@@ -84,6 +94,11 @@ async def maybe_react(m: Message):
     if "všechno nejlepší" in content:
         await m.add_reaction("🥳")
         await m.add_reaction("🎉")
+    if "atpro" in m.content.lower():
+        await m.add_reaction("😥")
+        await m.reply("To mě mrzí.")
+    if "in a nutshell" in m.content.lower():
+        await m.add_reaction("🌰")
     if "kdo je negr?" in content:
         await m.channel.send("Decim je negr.")
     if "kdo je based schizo?" in content:

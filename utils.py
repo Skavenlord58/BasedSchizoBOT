@@ -28,7 +28,7 @@ async def random_joke(m: Message):
             print(f"Caught exception:\n {exc}")
 
 
-async def hate_comment(content: str, m: Message):
+async def hate_comment(content: str, m: Message) -> None:
     terms = [
         ("negr", "negry", 6969),
         ("žid", "židy", 8000),
@@ -38,3 +38,10 @@ async def hate_comment(content: str, m: Message):
         if has_any(content, [singular, plural]):
             if random.randint(0, chance):
                 await m.reply(f"taky nesnáším {plural} :+1:")
+
+
+async def bot_validate(content: str, m: Message):
+    if content.startswith("hodný bot") or "good bot" in content:
+        await m.add_reaction("🙂")
+    if content.startswith("zlý bot") or has_any(content, ["bad bot", "naser si bote", "si naser bote"]):
+        await m.add_reaction("😢")
