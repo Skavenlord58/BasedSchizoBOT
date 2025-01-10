@@ -5,7 +5,6 @@ from typing import Iterable
 import aiohttp
 import disnake
 from disnake import Message
-from disnake.ext import commands
 from dotenv import load_dotenv
 
 import decimdictionary as decdi
@@ -91,7 +90,7 @@ async def maybe_react(m: Message):
         await m.channel.send("Decim je negr.")
     if "kdo je based schizo?" in content:
         await m.channel.send("To jsem já!")
-    if "linux" in content and not "gnu/linux" in content:
+    if "linux" in content and "gnu/linux" not in content:
         if random.randint(0, 64) == 4:
             if bool(random.getrandbits(1)):
                 await m.reply(LINUX_COPYPASTA)
@@ -115,26 +114,26 @@ async def maybe_react(m: Message):
         )
     if "jsem" in content:
         if random.randint(0, 36) == 4:
-            kdo = " ".join(m.content.split("jsem")[1].split(".")[0].split(",")[0].split(" ")[1:])
+            kdo = dad_who(content)
             await m.reply(f"Ahoj, {kdo}. Já jsem táta.")
     if content == "kdo":
-        await m.channel.send(f"kdo se ptal?")
+        await m.channel.send("kdo se ptal?")
     if "zhongli" in content:
-        await m.reply(f"haha žongli :clown:")
+        await m.reply("haha žongli :clown:")
     if "aneurysm" in content:
-        await m.reply(f"https://www.youtube.com/watch?v=kyg1uxOsAUY")
+        await m.reply("https://www.youtube.com/watch?v=kyg1uxOsAUY")
     if "schizo" in content:
         if random.randint(0, 4) == 2:
-            await m.reply(f"doslova já")
+            await m.reply("doslova já")
     if "?" in content:
         if random.randint(0, 32) == 4:
             await m.reply(f"{random.choice(REPLIES)}")
     if has_any(content, ["proč ", "proc "]):
         if random.randint(0, 8) == 4:
-            await m.reply(f"skill issue")
+            await m.reply("skill issue")
     if has_any(content, ["kiryu", "kyriu"]):
         if random.randint(0, 4) == 4:
-            await m.reply(f"Kiryu-chaaaaan!")
+            await m.reply("Kiryu-chaaaaan!")
     if "jsi" in content:
         if random.randint(0, 16) == 4:
             kdo = " ".join(m.content.split("jsi")[1].split(" ")[1:])
@@ -142,52 +141,57 @@ async def maybe_react(m: Message):
     await hate_comment(content, m)
     if has_any(content, ["israel", "izrael"]):
         if random.randint(0, 8000):
-            await m.reply(f"další důkaz, že rakouský malíř umřel moc brzo :pensive:")
+            await m.reply("další důkaz, že rakouský malíř umřel moc brzo :pensive:")
     if random.randint(0, 6969) == 1:
-        await m.reply(f"mňau")
+        await m.reply("mňau")
     if random.randint(0, 500000) == 1:
-        await m.reply(f"pipík")
+        await m.reply("pipík")
     if random.randint(0, 6969) == 1:
         # sadpenis is skipped everywhere
-        await m.reply(f"víš co? raději drž hubu, protože z tohohle jsem chytil rakovinu varlat")
+        await m.reply("víš co? raději drž hubu, protože z tohohle jsem chytil rakovinu varlat")
     if has_any(content, ["mama", "máma", "mami", "mommy", "mamka", "mamko"]):
         if random.randint(0, 64) == 1:
             await random_joke(m)
     if "lagtrain" in content:
-        await m.reply(f"https://www.youtube.com/watch?v=UnIhRpIT7nc")
+        await m.reply("https://www.youtube.com/watch?v=UnIhRpIT7nc")
     if "cum zone" in content:
-        await m.reply(f"https://www.youtube.com/watch?v=j0lN0w5HVT8")
+        await m.reply("https://www.youtube.com/watch?v=j0lN0w5HVT8")
     if "crab rave" in content:
-        await m.reply(f"https://youtu.be/LDU_Txk06tM?t=75")
+        await m.reply("https://youtu.be/LDU_Txk06tM?t=75")
     if "já jo" in content:
         if random.randint(0, 16) == 1:
-            await m.reply(f"já ne")
+            await m.reply("já ne")
     if "já ne" in content:
         if random.randint(0, 16) == 1:
-            await m.reply(f"já jo")
+            await m.reply("já jo")
     if has_any(content, ["chci se zabít", "suicidal"]):
-        await m.reply(f"omg don't kill yourself, ur too sexy, haha <:catcry:1158475025473622167>")
+        await m.reply("omg don't kill yourself, ur too sexy, haha <:catcry:1158475025473622167>")
     if "v píči" in content:
-        await m.reply(f"stejně tak moc v píči jako já včera večer v tvojí mámě loool <:kekWR:1063089161587933204>")
+        await m.reply("stejně tak moc v píči jako já včera večer v tvojí mámě loool <:kekWR:1063089161587933204>")
     if has_any(content, ["buisness", "bussines", "bussiness", "buissnes", "buisnes"]):
         await m.reply(
-            f"KÁMO lmao ukažte si na toho blbečka, co neumí napsat 'business' XDDDD :index_pointing_at_the_viewer: příště raději napiš 'byznys' dík :)"
+            "KÁMO lmao ukažte si na toho blbečka, co neumí napsat 'business' XDDDD :index_pointing_at_the_viewer: příště raději napiš 'byznys' dík :)"
         )
     if "reminder" in content:
         if random.randint(0, 4) == 1:
-            await m.reply(f"kind reminder: ur a bitch :)")
+            await m.reply("kind reminder: ur a bitch :)")
     if has_any(content, ["youtu.be", "youtube.com"]):
         if random.randint(0, 5) == 1:
             await m.reply(RECENZE[random.randint(0, len(RECENZE) - 1)])
     if content.__len__() >= 625:
-        await m.reply(f"i ain't reading all of that. im happy for you tho, or sorry that happened. depends on you")
+        await m.reply("i ain't reading all of that. im happy for you tho, or sorry that happened. depends on you")
     if has_any(content, ["špatný bot", "spatny bot"]):
-        await m.reply(f"i'm trying my best :pensive:")
+        await m.reply("i'm trying my best :pensive:")
     if has_any(content, ["podle mě", "myslím si"]):
         if bool(random.getrandbits(1)):
-            await m.reply(f"Souhlasím.")
+            await m.reply("Souhlasím.")
         else:
-            await m.reply(f"Rozhodně nesouhlasím.")
+            await m.reply("Rozhodně nesouhlasím.")
+
+
+def dad_who(content: str) -> str:
+    kdo = " ".join(content.split("jsem")[1].split(".")[0].split(",")[0].split(" ")[1:])
+    return kdo
 
 
 def has_any(content: str, words: Iterable) -> bool:
