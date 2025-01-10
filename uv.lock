@@ -86,6 +86,7 @@ dependencies = [
     { name = "aiohttp" },
     { name = "disnake" },
     { name = "python-dotenv" },
+    { name = "ufal-morphodita" },
 ]
 
 [package.dev-dependencies]
@@ -99,6 +100,7 @@ requires-dist = [
     { name = "aiohttp", specifier = ">=3.11.11,<4.0.0" },
     { name = "disnake", specifier = ">=2.10.1,<3.0.0" },
     { name = "python-dotenv", specifier = ">=1.0.1,<2.0.0" },
+    { name = "ufal-morphodita", specifier = ">=1.11.2.1" },
 ]
 
 [package.metadata.requires-dev]
@@ -330,6 +332,24 @@ wheels = [
     { url = "https://files.pythonhosted.org/packages/fe/08/4b54e02da73060ebc29368ab15868613f7d2496bde3b01d284d5423646bc/ruff-0.9.0-py3-none-win32.whl", hash = "sha256:d345f2178afd192c7991ddee59155c58145e12ad81310b509bd2e25c5b0247b3", size = 8807005 },
     { url = "https://files.pythonhosted.org/packages/a1/a7/0b422971e897c51bf805f998d75bcfe5d4d858f5002203832875fc91b733/ruff-0.9.0-py3-none-win_amd64.whl", hash = "sha256:0cbc0905d94d21305872f7f8224e30f4bbcd532bc21b2225b2446d8fc7220d19", size = 9689974 },
     { url = "https://files.pythonhosted.org/packages/73/0e/c00f66731e514be3299801b1d9d54efae0abfe8f00a5c14155f2ab9e2920/ruff-0.9.0-py3-none-win_arm64.whl", hash = "sha256:7b1148771c6ca88f820d761350a053a5794bc58e0867739ea93eb5e41ad978cd", size = 9147729 },
+]
+
+[[package]]
+name = "ufal-morphodita"
+version = "1.11.2.1"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/40/9f/9df346160d7828c3cec2b705bba4b5d9cff7b186f8010b31be250df223b3/ufal.morphodita-1.11.2.1.tar.gz", hash = "sha256:8f2ebaa0bfd11b7036e94a56cdd84ca3164ed1dc491a96a4f54a474516e93ed3", size = 193107 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/d5/83/54761dc70c4800d046c410efd9c2e53cbb0f925bcf133ba78bfb2beadf90/ufal.morphodita-1.11.2.1-cp312-cp312-macosx_10_9_x86_64.whl", hash = "sha256:d4e3fe584ded4e99ce22902e8814774c166266aab0184b467982293c65d39720", size = 442786 },
+    { url = "https://files.pythonhosted.org/packages/bf/b6/cbf3578d93901fcda169d66e651c21006564d046a56da3c8497732eb84e2/ufal.morphodita-1.11.2.1-cp312-cp312-macosx_11_0_arm64.whl", hash = "sha256:271712f0a54ab0763c60366815035ef3568d7c745d9731f59112a202b629e521", size = 413276 },
+    { url = "https://files.pythonhosted.org/packages/14/a3/b3217aaa3b493ddd4dbd1b3d2ac6a94b9f067a62dd41438f9f96a9120492/ufal.morphodita-1.11.2.1-cp312-cp312-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:8842fa541204f52e5a98668cb2aee61032477fe76560cb718c2e0064bb421450", size = 415452 },
+    { url = "https://files.pythonhosted.org/packages/30/14/184d528492ec67ad9096ab6555466d999083b47774500edb4cbb36da9b95/ufal.morphodita-1.11.2.1-cp312-cp312-manylinux_2_17_i686.manylinux2014_i686.whl", hash = "sha256:22c4a87d2f27e2aa74852efc103acb1df24ecd4bff5236d9b1637bf0469eda87", size = 441704 },
+    { url = "https://files.pythonhosted.org/packages/ec/9d/2514bf4200de8fd736917546919f84afbb7d460de2a862b007fb94912a92/ufal.morphodita-1.11.2.1-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:182b962791760a950a2dd92c27506b502a9927894cbfa4e6c51ac2993c02aea2", size = 426604 },
+    { url = "https://files.pythonhosted.org/packages/38/f8/493a1b6d577a72d3d044306dafb7267ec1b0ebfd4d5edbf5d393953acd9c/ufal.morphodita-1.11.2.1-cp312-cp312-musllinux_1_1_aarch64.whl", hash = "sha256:5059e980e53f72a13e0c64104617c21e28f2a9b9539a756c5e9ef4ee8f7b769d", size = 937326 },
+    { url = "https://files.pythonhosted.org/packages/e4/b6/9a3d1961b09ca71c6ae171cf7404d571cbc0fa672ff1c86e94d96331f54e/ufal.morphodita-1.11.2.1-cp312-cp312-musllinux_1_1_i686.whl", hash = "sha256:1963e4922838f041e66f9420e2c9b647f270b61165748ed1bcb714f2a3f49bbc", size = 1017969 },
+    { url = "https://files.pythonhosted.org/packages/3c/0f/fb7fceb6a7753361cc17416cfbc5902f8f1d9cdc1c2d4dee39289a5f43a0/ufal.morphodita-1.11.2.1-cp312-cp312-musllinux_1_1_x86_64.whl", hash = "sha256:54bbd07d47c93c7c4e8e9d07592a80fd478f9bd4e5cf8c6cb2234eb003be8c1c", size = 960157 },
+    { url = "https://files.pythonhosted.org/packages/8b/80/6d5864d382b6b77086e9b69e92d59cf917329f47ce2882c607c89180d9fc/ufal.morphodita-1.11.2.1-cp312-cp312-win32.whl", hash = "sha256:a87d80457b83ab64e96d79069d55525e55997758366751d5c0ca6e900ddd323b", size = 418315 },
+    { url = "https://files.pythonhosted.org/packages/aa/cb/00d1833e9b3ec1c648ef0d7c27c9f1822c6130ebab3ffbabfdcae2332922/ufal.morphodita-1.11.2.1-cp312-cp312-win_amd64.whl", hash = "sha256:207f46e90542e066ee9d6ddbc8b551f0e6aff67aed7afa4cd4971d95be55c990", size = 540826 },
 ]
 
 [[package]]
