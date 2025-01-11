@@ -109,7 +109,8 @@ async def maybe_react(m: Message):
                 await m.reply(LINUX_COPYPASTA)
             else:
                 await m.reply(CESKA_LINUX_COPYPASTA)
-    if has_any(content, ["hilfe", "pomoc"]) and "pomocí" not in content:
+    # speciální případ na hilfe
+    if has_any(content, ["hilfe"]) or needs_help(content):
         if random.randint(0, 3) == 1:
             await m.reply(f"""
             „{MOT_HLASKY[random.randint(0, len(MOT_HLASKY) - 1)]}“

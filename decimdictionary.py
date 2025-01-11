@@ -1,59 +1,3 @@
-HELP = """
-    ***Bot commands:***
-    _arguments in \{\} are optional, arguments with \[\] are required_
-    $_bothelp_ or _commands_
-        Shows help.
-    $_ping_
-        Shows bot's ping and API latency.
-    $_roll_ \{number\}
-        Rolls a random number between 1 and \{number\}. Defaults number to 100,
-        if not specified.
-    $_yesorno_
-        Answers a question with yes or no.
-    $_warcraft_ \{time\}
-        Creates a warcraft play session announcement from template.
-    $_gmod_ \{time\}
-        Creates a gmod play session announcement from template.
-    $_poll_ [name_of_poll] [option_1] [option2] \{option3\} \{option4\} \{option5\}
-        Use underscores as spaces. Bot will automatically edit them for you.
-    $_today_
-        Tells you which international day it is today.
-    """
-
-WARCRAFTY_CZ = """
-<@&871817685439234108> - Warcrafty 3 dnes{0}?
-React with attendance:
-:white_check_mark: Ano
-:negative_squared_cross_mark: Ne
-:thinking: Možná
-
-Chceme hrát:
-:one: - Survival Chaos
-:two: - Legion TD nebo Element TD
-:three: - Blood Tournament
-:four: - Risk
-:five: - Luckery/Uther Party/Temple Escape
-:six: - Objevovat nové mapy.
-:question: - Něco jiného? Napište jako reply.
-"""
-
-GMOD_CZ = """
-<@&951457356221394975> - Garry's Mod dnes{0}?
-    React with attendance:
-    :white_check_mark: Ano
-    :negative_squared_cross_mark: Ne
-    :thinking: Možná
-
-    Chceme hrát:
-    :one: - TTT (OG Among Us)
-    :two: - PropHunt/Hide&Seek (schováváte se na mapě jako props a hlídači vás hledají)
-    :three: - Stranded (RPG mapa, něco jako Rust)
-    :four: - DropZone (arena s různýma spellama něco jako Warloci ve W3)
-    :five: - Flood
-    :question: - Něco jiného? Napište jako reply.
-
-"""
-
 MOT_HLASKY = [
     "Zatímco ztrácíme svůj čas váháním a odkládáním, život utíká.",
     "Přijmi to co je. Nech plavat to, co bylo. A měj víru v to, co přijde.",
@@ -155,5 +99,3 @@ Many computer users run a modified version of the GNU system every day, without 
 
 There really is a Linux, and these people are using it, but it is just a part of the system they use. Linux is the kernel: the program in the system that allocates the machine's resources to the other programs that you run. The kernel is an essential part of an operating system, but useless by itself; it can only function in the context of a complete operating system. Linux is normally used in combination with the GNU operating system: the whole system is basically GNU with Linux added, or GNU/Linux. All the so-called Linux distributions are really distributions of GNU/Linux!
 """
-GIDS = [276720867344646144]
-TWITTERPERO = 1042052161338626128

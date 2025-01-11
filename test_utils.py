@@ -1,6 +1,6 @@
 import pytest
 
-from utils import find_who, find_self_reference, run_async
+from utils import find_who, find_self_reference, run_async, needs_help, Token
 
 
 @pytest.mark.parametrize(
@@ -73,10 +73,19 @@ def test_dad_who(content, expected):
         ("@John Doe jsem tu", (False, "tu")),
         ("also, dělal jsem i improvemnts na bota and shit cmon :D", (True, "i improvemnts na bota and shit cmon")),
         ("aspoň jsem implementoval toho autogreetera", (False, "implementoval toho autogreetera")),
-        ("a jo 5GHz nemám, musím koupit přijímač, jen jsem se k tomu ještě nedostal 😄", (False, "se k tomu ještě nedostal")),
+        (
+            "a jo 5GHz nemám, musím koupit přijímač, jen jsem se k tomu ještě nedostal 😄",
+            (False, "se k tomu ještě nedostal"),
+        ),
         ("už jsem to fixnul dávno :D", (False, "to fixnul dávno")),
-        ("Teda s tím, že jsem se nikdy ani nesnažil datit. Basically jsem nikdy neudělal první krok a pak jsem byl často", (False, "se nikdy ani nesnažil datit")),
-        ("lol, jsem chtel creditnout umelce a Facebook blokuje twitter linky:", (False, "chtel creditnout umelce a facebook blokuje twitter linky")),
+        (
+            "Teda s tím, že jsem se nikdy ani nesnažil datit. Basically jsem nikdy neudělal první krok a pak jsem byl často",
+            (False, "se nikdy ani nesnažil datit"),
+        ),
+        (
+            "lol, jsem chtel creditnout umelce a Facebook blokuje twitter linky:",
+            (False, "chtel creditnout umelce a facebook blokuje twitter linky"),
+        ),
         ("jsem velký blbec", (True, "velký blbec")),
         ("jsem blbec velký", (True, "blbec velký")),
         ("jsem expert na prsteny a trouba", (True, "expert na prsteny a trouba")),
@@ -88,6 +97,37 @@ def test_self_reference(content, expected):
     result = find_self_reference(content, "jsem")
     assert result[:2] == expected
 
+
 async def test_run_async():
     is_self_reference, who, _ = await run_async(find_self_reference, "jsem to ale čuník buník", "jsem")
     assert is_self_reference, who == (True, "to ale čuník buník")
+
+
+@pytest.mark.parametrize(
+    "content, expected",
+    [
+        ("nejsem pomoc", False),
+        ('V 90% tam není punchline, protože ta zpráva není "pomoc" ale je to jako slovo v nějaké větě.', False),
+        ("chtěl jsem jen pomoct, jelikož sám vím, jak hrozně mě bolelo, když jsem měl velké očekávání", False),
+        ("Sunny poskytla topícímu se dítěti první pomoc", False),
+        ("pomoc, jsem utlačovanej", True),
+        ("potřebuju pomoct", True),
+        ("žádám o pomoc", True),
+    ],
+)
+def test_needs_help(content, expected):
+    assert needs_help(content) == expected
+
+@pytest.mark.parametrize(
+    "token, tag, expected",
+    [
+        (Token("", ",", "Z:-------------", ","), "*:-", True),
+        (Token("", "Alena_;Y", "NNFS1-----A----", "Alena"), "NN*S1", True),
+        (Token("", "Alena_;Y", "NNFS1-----A----", "Alena"), "NNMS1", False),
+        (Token("", "poskytnout", "VpQW----R-AAP-1", "poskytla"), "VpQ", True),
+        (Token("", "první-1", "CrFS1----------", "první"), "NrM", False),
+        (Token("", "být", "VB-S---1P-AAI--", "jsem"), "NN*S", False),
+    ],
+)
+def test_token(token: Token, tag: str, expected: True):
+    assert token.tag_matches(tag) == expected

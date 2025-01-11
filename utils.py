@@ -50,6 +50,13 @@ class Token:
     lemma_tag: str
     text: str
 
+    def tag_matches(self, tag: str) -> bool:
+        # * means anything
+        for i, char in enumerate(tag):
+            if char != "*" and char != self.lemma_tag[i]:
+                return False
+        return True
+
 
 # CPU-heavy věci budeme dělat v separátním threadu
 executor = ThreadPoolExecutor(max_workers=1)
@@ -60,6 +67,29 @@ async def run_async(func: callable, *args: Any) -> tuple[bool, str, int]:
 
 
 def find_self_reference(text: str, keyword: str) -> tuple[bool, str, int]:
+    toks, word_count = parse_sentence_with_keyword(text, keyword, True)
+    result = "".join([tok.text if i == 0 else tok.text_before + tok.text for i, tok in enumerate(toks)])
+    # kontroluje, zda je tam nějaké podstatné jméno jednotného čísla v prvním pádu
+    singular_noun = any([tok.tag_matches("NN*S1") for tok in toks])
+    # pokud je tam další sloveso, je to špatně
+    any_verb = any([tok.tag_matches("VB") for tok in toks])
+    valid_me = singular_noun and not any_verb
+    return valid_me, result, word_count
+
+
+def needs_help(text: str) -> bool:
+    toks, word_count = parse_sentence_with_keyword(text, "pomoc", False)
+    if any(tok.tag_matches("NN*S") and tok.lemma == "pomoc" for tok in toks) or any(tok.tag_matches("Vf") and tok.lemma == "pomoci" for tok in toks):
+        if len(toks) == 1:
+            return True
+        if any(tok.tag_matches("VB-S***1P*A")
+               # and tok.lemma in ["potřebovat", "chtít"]
+        for tok in toks) and not any(tok.tag_matches("V*******R") for tok in toks):   # jen přítomný čas a žádný záporný
+            return True
+    return False
+
+
+def parse_sentence_with_keyword(text: str, keyword: str, after_keyword: bool) -> tuple[list[Token], int]:
     text = truncate_emojis(text.lower())
     word_count = 0
     forms = Forms()
@@ -86,7 +116,7 @@ def find_self_reference(text: str, keyword: str) -> tuple[bool, str, int]:
             token = tokens[i]
 
             tok = Token(
-                text[t_iter : token.start], lemma.lemma, lemma.tag, text[token.start : token.start + token.length]
+                text[t_iter: token.start], lemma.lemma, lemma.tag, text[token.start: token.start + token.length]
             )
             t_iter = token.start + token.length
 
@@ -95,21 +125,15 @@ def find_self_reference(text: str, keyword: str) -> tuple[bool, str, int]:
                 sentence_end = True
                 if len(toks) > 0:
                     break
-            # přidáváme až po jsem, ale jsem samotné vynecháváme
-            if has_word and not sentence_end:
+            # pokud je after keyword true, přidáváme až po keywordu, ale keyword samotný vynecháváme
+            if (has_word and not sentence_end) or (not after_keyword):
                 toks.append(tok)
             # jsem
             if tok.text == keyword:
                 has_word = True
         if has_word and sentence_end:
             break
-    result = "".join([tok.text if i == 0 else tok.text_before + tok.text for i, tok in enumerate(toks)])
-    # kontroluje, zda je tam nějaké podstatné jméno jednotného čísla v prvním pádu
-    singular_noun = any([tok.lemma_tag[0:2] == "NN" and tok.lemma_tag[3:5] == "S1" for tok in toks])
-    # pokud je tam další sloveso, je to špatně
-    any_verb = any([tok.lemma_tag[0:2] == "VB" for tok in toks])
-    valid_me = singular_noun and not any_verb
-    return valid_me, result, word_count
+    return toks, word_count
 
 
 def find_who(content: str, verb: str) -> str:
