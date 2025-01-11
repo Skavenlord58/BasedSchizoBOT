@@ -8,7 +8,7 @@ from typing import Iterable, Any
 
 import aiohttp
 from disnake import Message
-from ufal.morphodita import Tagger, Forms, TaggedLemmas, TokenRanges
+from ufal.morphodita import Tagger, Forms, TaggedLemmas, TokenRanges, Morpho, TaggedLemmasForms
 
 
 def truncate_emojis(text):
@@ -28,8 +28,10 @@ def truncate_emojis(text):
 
 
 print("Loading tagger: ")
-tagger_path = r"./czech-morfflex2.0-pdtc1.0-220710/czech-morfflex2.0-pdtc1.0-220710.tagger"
+tagger_path = "./czech-morfflex2.0-pdtc1.0-220710/czech-morfflex2.0-pdtc1.0-220710.tagger"
 tagger = Tagger.load(tagger_path)
+dict_path = "./czech-morfflex2.0-pdtc1.0-220710/czech-morfflex2.0-220710.dict"
+morpho = Morpho.load(dict_path)
 
 if not tagger:
     print(f"Cannot load tagger from file {tagger_path}")
@@ -67,13 +69,25 @@ async def run_async(func: callable, *args: Any) -> tuple[bool, str, int]:
 
 
 def find_self_reference(text: str, keyword: str) -> tuple[bool, str, int]:
+    lemmas_forms = TaggedLemmasForms()
     toks, word_count = parse_sentence_with_keyword(text, keyword, True)
-    result = "".join([tok.text if i == 0 else tok.text_before + tok.text for i, tok in enumerate(toks)])
     # kontroluje, zda je tam nějaké podstatné jméno jednotného čísla v prvním pádu
     singular_noun = any([tok.tag_matches("NN*S1") for tok in toks])
     # pokud je tam další sloveso, je to špatně
     any_verb = any([tok.tag_matches("VB") for tok in toks])
     valid_me = singular_noun and not any_verb
+    # správné skloňování
+    try:
+        for tok in toks:
+            if not tok.tag_matches("NN*S1"):
+                continue
+            tok_tags = tok.lemma_tag
+            tok_tags = tok_tags[:4] + "5" + tok_tags[5:]
+            morpho.generate(tok.lemma, tok_tags, morpho.GUESSER, lemmas_forms)
+            tok.text = next(form.form for lemma_forms in lemmas_forms for form in lemma_forms.forms)
+    except:
+        print("Selhalo skloňování")
+    result = "".join([tok.text if i == 0 else tok.text_before + tok.text for i, tok in enumerate(toks)])
     return valid_me, result, word_count
 
 
