@@ -94,12 +94,12 @@ def test_dad_who(content, expected):
 )
 def test_self_reference(content, expected):
     # already assumes lowercased text
-    result = find_self_reference(content, "jsem")
+    result = find_self_reference(content, "jsem", True)
     assert result[:2] == expected
 
 
 async def test_run_async():
-    is_self_reference, who, _ = await run_async(find_self_reference, "jsem to ale čuník buník", "jsem")
+    is_self_reference, who, _ = await run_async(find_self_reference, "jsem to ale čuník buník", "jsem", False)
     assert is_self_reference, who == (True, "to ale čuník buník")
 
 

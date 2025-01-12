@@ -45,11 +45,13 @@ while not_eof:
   while True:
     line = sys.stdin.readline()
     not_eof = bool(line)
-    if not not_eof: break
+    if not not_eof:
+        break
     line = line.rstrip('\r\n')
     text += line
     text += '\n'
-    if not line: break
+    if not line:
+        break
 
 
 

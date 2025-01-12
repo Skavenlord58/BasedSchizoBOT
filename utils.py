@@ -68,7 +68,7 @@ async def run_async(func: callable, *args: Any) -> tuple[bool, str, int]:
     return await asyncio.get_running_loop().run_in_executor(executor, func, *args)
 
 
-def find_self_reference(text: str, keyword: str) -> tuple[bool, str, int]:
+def find_self_reference(text: str, keyword: str, use_vocative: bool) -> tuple[bool, str, int]:
     lemmas_forms = TaggedLemmasForms()
     toks, word_count = parse_sentence_with_keyword(text, keyword, True)
     # kontroluje, zda je tam nějaké podstatné jméno jednotného čísla v prvním pádu
@@ -77,6 +77,13 @@ def find_self_reference(text: str, keyword: str) -> tuple[bool, str, int]:
     any_verb = any([tok.tag_matches("VB") for tok in toks])
     valid_me = singular_noun and not any_verb
     # správné skloňování
+    if use_vocative:
+        nouns2vocative(lemmas_forms, toks)
+    result = "".join([tok.text if i == 0 else tok.text_before + tok.text for i, tok in enumerate(toks)])
+    return valid_me, result, word_count
+
+
+def nouns2vocative(lemmas_forms: TaggedLemmasForms, toks: list[Token]):
     try:
         for tok in toks:
             if not tok.tag_matches("NN*S1"):
@@ -87,8 +94,6 @@ def find_self_reference(text: str, keyword: str) -> tuple[bool, str, int]:
             tok.text = next(form.form for lemma_forms in lemmas_forms for form in lemma_forms.forms)
     except:
         print("Selhalo skloňování")
-    result = "".join([tok.text if i == 0 else tok.text_before + tok.text for i, tok in enumerate(toks)])
-    return valid_me, result, word_count
 
 
 def needs_help(text: str) -> bool:

@@ -2,7 +2,7 @@ import time
 
 from ufal.morphodita import *
 
-from utils import truncate_emojis, Token, find_self_reference
+from utils import truncate_emojis, find_self_reference
 
 # load from file
 with open("sentences.txt", "r", encoding="utf-8") as f:
@@ -16,7 +16,7 @@ word_count = 0
 keyword = "jsem"
 
 for text in texts:
-    ok, sentence, word_count_add = find_self_reference(text, keyword)
+    ok, sentence, word_count_add = find_self_reference(text, keyword, True)
     word_count += word_count_add
     print(f"{"správná" if ok else "špatná"}: "  + sentence)
 
